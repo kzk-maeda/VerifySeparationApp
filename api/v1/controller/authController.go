@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"main/model"
 )
@@ -75,5 +76,26 @@ func Signup(writer http.ResponseWriter, request *http.Request) {
 		fmt.Println(err)
 	}
 	writer.Write(output)
+
+}
+
+func isSessionValid(request *http.Request) (valid bool, err error) {
+	userID, _ := strconv.Atoi(request.Form.Get("user_id"))
+	requestSessionID := request.Form.Get("session_id")
+	dbSession, err := model.GetSession(userID)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	dbSessionID := dbSession.UUID
+
+	if requestSessionID == dbSessionID {
+		fmt.Println("valid")
+		valid = true
+	} else {
+		fmt.Println("invalid")
+		valid = false
+	}
+	return
 
 }

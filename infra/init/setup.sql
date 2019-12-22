@@ -19,7 +19,7 @@ create table todo_table (
     uuid       varchar(64) not null unique,
     title      varchar(255),
     body       text,
-    deadline   date,
+    deadline   varchar(255),
     user_id    integer references user_table(id),
     created_at timestamp not null  
 );

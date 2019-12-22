@@ -21,6 +21,9 @@ func main() {
 	mux.HandleFunc("/auth/logout", controller.Logout)
 	mux.HandleFunc("/auth/signup", controller.Signup)
 
+	mux.HandleFunc("/todo/list", controller.ListTodos)
+	mux.HandleFunc("/todo/add", controller.AddTodo)
+
 	// Setting Server
 	server := &http.Server{
 		Addr:           util.Config.Address,

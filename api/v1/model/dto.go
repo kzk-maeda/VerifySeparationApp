@@ -26,7 +26,7 @@ type Todo struct {
 	UUID      string
 	Title     string
 	Body      string
-	Deadline  time.Time
+	Deadline  string
 	UserID    int
 	CreatedAt time.Time
 }
