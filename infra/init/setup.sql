@@ -20,7 +20,7 @@ create table todo_table (
     title      varchar(255),
     body       text,
     deadline   date,
-    user_id    integer references users(id),
+    user_id    integer references user_table(id),
     created_at timestamp not null  
 );
 
@@ -28,6 +28,6 @@ create table session_table (
     id         serial primary key,
     uuid       varchar(64) not null unique,
     email      varchar(255),
-    user_id    integer references users(id),
+    user_id    integer references user_table(id),
     created_at timestamp not null   
 )

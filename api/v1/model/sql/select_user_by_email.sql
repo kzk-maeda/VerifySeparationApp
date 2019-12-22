@@ -1,0 +1,1 @@
+SELECT id, uuid, name, email, password, created_at FROM user_table WHERE email = $1
