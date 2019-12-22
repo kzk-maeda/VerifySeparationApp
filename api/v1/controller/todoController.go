@@ -103,3 +103,27 @@ func UpdateTodo(writer http.ResponseWriter, request *http.Request) {
 		writer.Write(output)
 	}
 }
+
+func DeleteTodo(writer http.ResponseWriter, request *http.Request) {
+	fmt.Println("DeleteTodo")
+	// parse request parameter
+	err := request.ParseForm()
+	if err != nil {
+		fmt.Println(err)
+	}
+	// check session is valid
+	isValid, err := isSessionValid(request)
+	if isValid {
+		// delete todo
+		fmt.Println("session is valid")
+		todoID, _ := strconv.Atoi(request.Form.Get("todo_id"))
+		todo := model.Todo{
+			ID: todoID,
+		}
+		if err := todo.DeleteTask(); err != nil {
+			fmt.Println("err ", err)
+		}
+
+		// return status code
+	}
+}

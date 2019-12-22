@@ -56,6 +56,12 @@ func (todo *Todo) UpdateTask() (err error) {
 	return
 }
 
-func DeleteTask() {
-
+func (todo *Todo) DeleteTask() (err error) {
+	sql, err := readSQLFile("model/sql/delete_todo.sql")
+	if err != nil {
+		print(err)
+		return
+	}
+	_, err = Db.Exec(sql, todo.ID)
+	return
 }
