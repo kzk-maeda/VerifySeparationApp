@@ -43,8 +43,17 @@ func (todo *Todo) CreateTask() (err error) {
 
 }
 
-func UpdateTask() {
-
+func (todo *Todo) UpdateTask() (err error) {
+	sql, err := readSQLFile("model/sql/update_todo.sql")
+	stmt, err := Db.Prepare(sql)
+	if err != nil {
+		print(err)
+		return
+	}
+	defer stmt.Close()
+	err = stmt.QueryRow(todo.ID, todo.Title, todo.Body, todo.Deadline, time.Now()).
+		Scan(&todo.ID, &todo.Title, &todo.Body, &todo.Deadline)
+	return
 }
 
 func DeleteTask() {

@@ -90,10 +90,8 @@ func isSessionValid(request *http.Request) (valid bool, err error) {
 	dbSessionID := dbSession.UUID
 
 	if requestSessionID == dbSessionID {
-		fmt.Println("valid")
 		valid = true
 	} else {
-		fmt.Println("invalid")
 		valid = false
 	}
 	return
