@@ -37,6 +37,54 @@ func ListTodos(writer http.ResponseWriter, request *http.Request) {
 
 }
 
+func AddOrModTodo(writer http.ResponseWriter, request *http.Request) {
+	fmt.Println("AddORModTodo")
+	// parse request parameter
+	err := request.ParseForm()
+	if err != nil {
+		fmt.Println(err)
+	}
+	isValid, err := isSessionValid(request)
+	if isValid {
+		// switch which userID is nil or not
+		userID, _ := strconv.Atoi(request.Form.Get("user_id"))
+		todoID, err := strconv.Atoi(request.Form.Get("todo_id"))
+		todo := model.Todo{}
+		if err != nil {
+			// add
+			todo = model.Todo{
+				Title:    request.Form.Get("title"),
+				Body:     request.Form.Get("body"),
+				Deadline: request.Form.Get("deadline"),
+				UserID:   userID,
+			}
+			if err := todo.CreateTask(); err != nil {
+				fmt.Println("err ", err)
+			}
+		} else {
+			// mod
+			//todoID, _ := strconv.Atoi(request.Form.Get("todo_id"))
+			todo = model.Todo{
+				ID:       todoID,
+				Title:    request.Form.Get("title"),
+				Body:     request.Form.Get("body"),
+				Deadline: request.Form.Get("deadline"),
+				UserID:   userID,
+			}
+			if err := todo.UpdateTask(); err != nil {
+				fmt.Println("err ", err)
+			}
+		}
+		// return
+		writer.Header().Set("Content-Type", "application/json")
+		output, err := json.MarshalIndent(&todo, "", "\t\t")
+		if err != nil {
+			fmt.Println(err)
+		}
+		writer.Write(output)
+	}
+}
+
 func AddTodo(writer http.ResponseWriter, request *http.Request) {
 	fmt.Println("AddTodo")
 	// parse request parameter

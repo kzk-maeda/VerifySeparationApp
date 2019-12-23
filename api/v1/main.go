@@ -25,6 +25,7 @@ func main() {
 	mux.HandleFunc("/todo/add", controller.AddTodo)
 	mux.HandleFunc("/todo/update", controller.UpdateTodo)
 	mux.HandleFunc("/todo/delete", controller.DeleteTodo)
+	mux.HandleFunc("/todo/addmod", controller.AddOrModTodo)
 
 	// Setting Server
 	server := &http.Server{
